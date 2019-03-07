@@ -9,20 +9,42 @@ public class Adaptadores {
         player.play("file.mp4");
         player = new FormatAdapter(new VLC());
         player.play("file.avi");
+        player = new FormatAdapter(new DIVX());
+         player.play("file.divx");
+        
     }
 
     private static class FormatAdapter implements MediaPlayer {
 
-        private MediaPackage media;
+        private Object media;
 
         public FormatAdapter(MediaPackage m) {
             media = m;
         }
-
+        public FormatAdapter(MediaDivX m) {
+            media = m;
+        }
+        
         @Override
         public void play(String filename) {
             System.out.print("Using Adapter --> ");
-            media.playFile(filename);
+            if (media instanceof VLC){
+            VLC adaptado = (VLC)media;
+                adaptado.playFile(filename);
+            
+            }
+            
+            if (media instanceof DIVX){
+            DIVX adaptado = (DIVX)media;
+                adaptado.playFilm(filename);
+            
+            }
+            if (media instanceof MP4){
+             MP4 x = (MP4)media;
+                x.playFile(filename);
+            
+            }
+            
         }
     }
 }
